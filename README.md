@@ -22,6 +22,7 @@
 ### Properties have valid values
 ## CRUDs
 Things
+
 Places
 ## Admin
 ### Reports
