@@ -11,8 +11,6 @@
 
  Users use Things
 
- Users add Things
-
  Things are monitored
 
  Things has Things
@@ -32,6 +30,7 @@
  Properties have unit measures
  
  Properties have valid values
+ 
 ## CRUDs
 Things
 
