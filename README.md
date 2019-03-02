@@ -1,9 +1,12 @@
 # seeu
 
+## Referentials
 ### Things
 ### Users
 ### Places
 ### Things types
+
+## Integrations
 ### Users have Things
 ### Users use Things
 ### Users add Things
@@ -17,3 +20,9 @@
 ### Things types have properties
 ### Properties have unit measures
 ### Properties have valid values
+## CRUDs
+Things
+Places
+## Admin
+### Reports
+Users
