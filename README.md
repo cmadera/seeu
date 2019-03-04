@@ -1,3 +1,29 @@
+# Overview
+
+# Install
+
+## Environment
+
+### Visual Studio Code
+https://code.visualstudio.com/
+
+### Node Js
+https://nodejs.org/en/download/
+
+### Git
+https://git-scm.com/download/gui/
+
+  cd ~
+
+  mkdir dev
+
+  cd ~/dev
+
+  git clone https://github.com/cmadera/seeu.git
+
+### Firebase
+npm install -g firebase-tools
+
 # seeu
 
 ## Referentials
