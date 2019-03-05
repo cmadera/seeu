@@ -17,7 +17,7 @@ function writeUserData(userId, name, email, imageUrl) {
       email: email,
       profile_picture : imageUrl
     }).then(() =>
-      firebase.database().ref('logins').push().set({
+      firebase.database().ref('users/' + userId +'/logins').push().set({
             userId: userId,
             email: email,
             logindate : Date()

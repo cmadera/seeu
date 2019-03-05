@@ -1,0 +1,28 @@
+{
+  "rules": {
+    "admin": {
+      ".read": "auth != null && auth.token.email == 'carlos.madera@gmail.com'",
+      ".write":"auth != null && auth.token.email == 'carlos.madera@gmail.com'"  
+    },
+    "thing": {
+      "$uid": {
+        ".read":  "auth != null && auth.uid == $uid",
+        ".write": "auth != null"          
+      }
+    },
+    "types": {
+      "$uid": {
+        ".read":  "auth != null && auth.uid == $uid",
+        ".write": "auth != null"          
+      }
+    },
+    "users": {
+      ".read":  "auth != null",
+      ".write": "auth != null"          
+    },
+    "logins": {
+      ".read":  "auth != null",
+      ".write": "auth != null"          
+    }
+  }
+}
