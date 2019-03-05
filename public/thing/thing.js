@@ -1,6 +1,5 @@
 'use strict';
 
-
 // Shortcuts to DOM Elements.
 var addMenuButton = document.getElementById('add-menu');
 
@@ -11,10 +10,22 @@ var inOrder  = document.getElementById('inOrder');
 
 var ref = firebase.database().ref('thing');
 
-splashPage.style.display = 'none';
+var currentUID;
+var populated = false;
+
+function onAuthStateChanged(user) {
+  if (user && currentUID === user.uid) return;
+  currentUID = (user)?user.uid:null;
+
+  populateList();
+
+}
+
 
 // Bindings on load.
 window.addEventListener('load', function() {
+
+  firebase.auth().onAuthStateChanged(onAuthStateChanged);
 
   addMenuButton.addEventListener('click', function() {
     var varItem = {
@@ -29,22 +40,22 @@ window.addEventListener('load', function() {
       addMenuOnScreen(varItem, snapshot.key);
     });
   });
-
-
-  populateList();
-
-
 }, false);
 
 function populateList() {
-  ref.on('value', snapshot => {
-    snapshot.forEach(value => {
-      addMenuOnScreen(value.val(), value.key);
+  if (currentUID!=null && !populated) {
+    ref.on('value', snapshot => {
+      snapshot.forEach(value => {
+        addMenuOnScreen(value.val(), value.key);
+      });
+      ref.off('value');
+      populated = true;
+    }, err => {
+      console.log('erro no on', err);
     });
-    ref.off('value');
-  }, err => {
-    console.log('erro no on', err);
-  });
+  } else {
+    //alert('Oops');
+  }
 }
 
 function deleteItem(key) {
