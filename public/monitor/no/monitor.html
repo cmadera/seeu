@@ -1,0 +1,41 @@
+<html ng-app="monitor">
+<head>
+    <title>Infra Monitor</title>
+    <script src="assets/angular.min.js"></script>
+    <script src="assets/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/semantic.min.css" />
+    <script type="text/javascript" src="assets/semantic.min.js"></script>
+    <script>
+        var app = angular.module('monitor', []);
+
+        app.controller("monitorLocalCtrl", function ($scope, $http) {
+            var ajaxTime= new Date().getTime();
+            $http ({
+                    method: "POST", 
+                    url: "monitor.php?DISPLAY=ALL"
+                }).success(function(data) {
+                    $scope.results = data;
+                    $scope.totalTime = new Date().getTime()-ajaxTime;
+                })
+        })
+        
+    </script>
+    <meta http-equiv="refresh" content="300">
+</head>
+<body>
+    <div class="ui cards">
+      <div class="card">
+        <div class="content">
+            <div class="description" ng-controller="monitorLocalCtrl">
+                <div class="ui internally celled grid" ng-repeat="res in results">
+                    <div class="row">
+                        <div class="eight wide column">{{res.name}}</div>
+                        <div class="eight wide column">{{res.value}} {{res.mu}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>

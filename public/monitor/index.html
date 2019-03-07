@@ -1,0 +1,44 @@
+<html ng-app="monitor">
+<head>
+    <title>Infra Monitor</title>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js"></script>
+    <script src="assets/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/semantic.min.css" />
+    <script type="text/javascript" src="assets/semantic.min.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+    <script type="text/javascript">
+      angular.element(document.getElementsByTagName('head')).append(angular.element('<base href="' + window.location.pathname + '" />'));
+    </script>
+
+</head>
+<body>
+    <div class="center aligned sixteen wide column" ng-controller="monitorCtrl" id="monitorCtrl">
+        <div class="ui segment">
+            <div class="ui right aligned grid">
+              <div class="left aligned four wide column">
+                <div class="ui segment">
+                    Last update: <br>
+                    {{dateNow.now() | date:'yyyy-MM-dd HH:mm:ss'}}
+                </div>
+              </div>
+              <div class="right aligned twelve wide column">
+                <div class="ui segment">
+                    <a href="Target/ALL" class="ui positive basic button">ALL</a>
+                    <a href="Target/Small" class="ui negative basic button">Small</a>
+                    <a href="Target/Warnings" class="ui negative basic button">Warnings</a>
+                    <a href="Target/Inventory" class="ui secondary basic button">Inventory</a>
+                    <a href="Target/Middleware" class="ui secondary basic button">Middleware</a>
+                    <a href="Target/Network" class="ui primary basic button">Network</a>
+                    <a href="#" ng-click="reloadRoute()" class="ui primary basic button">Reload</a>
+                    
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div ng-view></div>
+
+        </div>
+    </div>
+</body>
+</html>
