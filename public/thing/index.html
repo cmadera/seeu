@@ -24,8 +24,10 @@
           <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
             <thead>
               <tr>
-                <th class="mdl-data-table__cell--non-numeric">Menu</th>
-                <th>Color</th>
+                <th class="mdl-data-table__cell--non-numeric">ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Type</th>
                 <th>Status</th>
                 <th>Order</th>
                 <th>Actions</th>
@@ -51,12 +53,16 @@
             <div class="mdl-dialog__content">
               <form action="#">
                 <div class="mdl-textfield mdl-js-textfield">
-                  <input class="mdl-textfield__input" type="text" id="inMenu" required>
-                  <label class="mdl-textfield__label" for="inMenu">Menu...</label>
+                  <input class="mdl-textfield__input" type="text" id="inName" required>
+                  <label class="mdl-textfield__label" for="inName">Name...</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield">
-                  <input class="mdl-textfield__input" type="text" id="inColor">
-                  <label class="mdl-textfield__label" for="inColor">Color...</label>
+                  <input class="mdl-textfield__input" type="text" id="inAddress">
+                  <label class="mdl-textfield__label" for="inAddress">Address...</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" id="inType">
+                  <label class="mdl-textfield__label" for="inType">Type...</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield">
                   <input class="mdl-textfield__input" type="text" id="inStatus">

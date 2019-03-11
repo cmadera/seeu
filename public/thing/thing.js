@@ -3,8 +3,9 @@
 // Shortcuts to DOM Elements.
 var addMenuButton = document.getElementById('add-menu');
 
-var inMenu    = document.getElementById('inMenu');
-var inColor   = document.getElementById('inColor');
+var inName    = document.getElementById('inName');
+var inAddress   = document.getElementById('inAddress');
+var inType  = document.getElementById('inType');
 var inStatus  = document.getElementById('inStatus');
 var inOrder  = document.getElementById('inOrder');
 
@@ -31,8 +32,9 @@ window.addEventListener('load', function() {
 
   addMenuButton.addEventListener('click', function() {
     var varItem = {
-      menu: inMenu.value,
-      color: inColor.value,
+      name: inName.value,
+      address: inAddress.value,
+      type: inType.value,
       status: inStatus.value,
       order: inOrder.value,
       dateModified : formatedToday(),
@@ -72,8 +74,10 @@ function addMenuOnScreen(data, key) {
   var tr = document.createElement("tr");
   tr.setAttribute('id', key);
 
-  tr.appendChild(createTD(data.menu));
-  tr.appendChild(createTD(data.color));
+  tr.appendChild(createTD(key));
+  tr.appendChild(createTD(data.name));
+  tr.appendChild(createTD(data.address));
+  tr.appendChild(createTD(data.type));
   tr.appendChild(createTD(data.status));
   tr.appendChild(createTD(data.order));
   var td = document.createElement("td");

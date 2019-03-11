@@ -13,7 +13,7 @@ angular.module('monitor', ['ngRoute'])
         method: "POST", 
         mode: "no-cors",
         crossDomain: true,
-        url: "https://us-central1-seeume-15d54.cloudfunctions.net/servers" //"fake/servers.txt"
+        url: "fake/servers.html"
     }).success(function(data) {
         $scope.servers = data;
     });
