@@ -14,29 +14,20 @@
     <link rel="stylesheet" href="../assets/styles.css">
     <link rel="stylesheet" href="../assets/dialog-polyfill.css">
   </head>
-<body>
 
-  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-
-    <div class="android-header mdl-layout__header mdl-layout__header--waterfall">
-      <div class="mdl-layout__header-row">
-        <!-- Add spacer, to align navigation to the right in desktop -->
-        <div class="android-header-spacer mdl-layout-spacer"></div>
-
-        <!-- Navigation -->
-        <div class="android-navigation-container">
-          <nav class="android-navigation mdl-navigation">
-              <a href="Target/ALL" class="mdl-navigation__link mdl-typography--text-uppercase" >ALL</a>
-              <a href="Target/Small" class="mdl-navigation__link mdl-typography--text-uppercase" >Small</a>
-              <a href="Target/Warnings" class="mdl-navigation__link mdl-typography--text-uppercase" >Warnings</a>
-              <a href="Target/Inventory" class="mdl-navigation__link mdl-typography--text-uppercase" >Inventory</a>
-              <a href="Target/Middleware" class="mdl-navigation__link mdl-typography--text-uppercase" >Middleware</a>
-              <a href="Target/Network" class="mdl-navigation__link mdl-typography--text-uppercase" >Network</a>
-              <a href="#" ng-click="reloadRoute()" class="mdl-navigation__link mdl-typography--text-uppercase" >Reload</a>
-            </nav>
-          </div>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+          <a href="Target/ALL"        class="mdl-layout__tab mdl-typography--text-uppercase" title="All"><i class="material-icons">blur_on</i></a>
+          <a href="Target/Small"      class="mdl-layout__tab mdl-typography--text-uppercase" title="Small"><i class="material-icons">grain</i></a>
+          <a href="Target/Warnings"   class="mdl-layout__tab mdl-typography--text-uppercase" title="Warnings"><i class="material-icons">warning</i></a>
+          <a href="Target/Inventory"  class="mdl-layout__tab mdl-typography--text-uppercase" title="Inventory"><i class="material-icons">list</i></a>
+          <a href="Target/Middleware" class="mdl-layout__tab mdl-typography--text-uppercase" title="Middleware"><i class="material-icons">layers</i></a>
+          <a href="Target/Network"    class="mdl-layout__tab mdl-typography--text-uppercase" title="Network"><i class="material-icons">network_check</i></a>
+          <a href="#" ng-click="reloadRoute()" class="mdl-layout__tab mdl-typography--text-uppercase" title="Reload"><i class="material-icons">adjust</i></a>
         </div>
-      </div>
+      </header>
     <div class="android-content mdl-layout__content">
       <iframe src="../welcome.html" name="iframe_a" style="border:none;" height="100%" width="100%"></iframe>
     </div>
