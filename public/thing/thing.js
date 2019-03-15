@@ -1,6 +1,7 @@
 'use strict';
 
 // Shortcuts to DOM Elements.
+var addButton = document.getElementById('addButton');
 var addMenuButton = document.getElementById('add-menu');
 
 var inName    = document.getElementById('inName');
@@ -18,8 +19,13 @@ function onAuthStateChanged(user) {
   if (user && currentUID === user.uid) return;
   currentUID = (user)?user.uid:null;
 
-  ref = firebase.database().ref('thing/'+currentUID);
-
+  if (currentUID!=null) {
+    ref = firebase.database().ref('thing/'+currentUID);
+  } else {
+    ref = null;
+    addButton.style.display = 'none';
+    console.log("Not logged in");
+  }
   populateList();
 
 }
