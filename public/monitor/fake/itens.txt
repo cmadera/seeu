@@ -1,1 +1,0 @@
-[{"name":"SERVERNAME","value":"i.seeu.me"},{"name":"OS Version","value":"CentOS Linux release 7.6.1810 (Core)","mu":""},{"name":"CPUs","value":"2 (Intel(R) Xeon(R) CPU L5520 @ 2.27GHz)","mu":""},{"name":"RAM(Free)","value":"991MB (7%)","mu":""},{"name":"DISK:\/(Free)","value":"8GB (75%)","mu":""},{"name":"SSLEXPIRE","value":"N\/A","mu":""}]

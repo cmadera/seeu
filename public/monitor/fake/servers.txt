@@ -1,8 +1,0 @@
-[{"nome":"WWW","url":"bigbank.com.br","agent":"\/monitor.php","protocol":"https"},
- {"nome":"SeeU","url":"seeu.me","agent":"\/monitor.php","protocol":"https"},
- {"nome":"iSeeU","url":"i.seeu.me","agent":"\/monitor.php","protocol":"http"},
- {"nome":"devSeeU","url":"dev.seeu.me","agent":"\/monitor.php","protocol":"http"},
- {"nome":"ThingsBoard SeeU","url":"thingsboard.seeu.me","agent":"\/monitor.php","protocol":"http"},
- {"nome":"MQTT","url":"mqtt.seeu.me","agent":"\/monitor.php","protocol":"http"},
- {"nome":"eSSe","url":"www.esseregalos.com","agent":"\/monitor.php","protocol":"http"},
- {"nome":"Utopias","url":"utopiasargentinas.com","agent":"\/monitor.php","protocol":"http"}]
