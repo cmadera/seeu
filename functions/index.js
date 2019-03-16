@@ -6,16 +6,81 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
+exports.monitor = functions.https.onRequest((req, res) => {
+  const thingid = req.query.thingid;
+  const currentUID = req.query.currentUID;
+  if (thingid==null)
+    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["ThingID is missing"]}}]');
+
+  if (currentUID==null)
+    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["currentUID is missing"]}}]');
+
+  // Get Thing database
+  var ref = admin.database().ref('thing/'+currentUID+'/'+thingid);
+
+  // Get Attributes Database
+  var att = admin.database().ref('attribute/'+currentUID);
+
+  // Check if User+Thing exist
+  ref.on('value', snapshot => {
+    if (snapshot.exists()) {
+      // If Exist save lastSee
+      ref.child('lastSee').set(formatedToday());
+
+      // And loop Attributes and save what was found
+      att.on('value', snap => {
+        snap.forEach(value => {
+          var attribute = value.val().name;
+          var valor = eval("req.body."+attribute);
+          if (valor != undefined) {
+            console.log('Att: ' + attribute + "=" + valor);
+            ref.child(attribute).set(valor);
+          } 
+        });
+        ref.off('value');
+      }, err => {
+        console.log('erro no on', err);
+      });
+    } else {
+      // If not exist, error
+      return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["Thing not found for this user"]}}]');
+    }
+    ref.off('value');
+  }, err => {
+    console.log('erro no on', err);
+  });
+
+  // Is everithing is OK, close the call 
+  return res.json('{"Thing":"'+ thingid + ', "status":"OK"}');
+
+  /*
+  const original = req.query.text;
+  const text = req.body.text;
+  var myJSON = JSON.stringify(req.body);
+  res.json('[{"name":"SERVERNAME","value":"'+original+'", "thingid":"'+thingid+'", "text":"'+text+'"},'+myJSON+']');  
+  */
+
+
+});
+
+function formatedToday() { 
+  var d = new Date();
+  return  d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+}
+
+
+/*
 exports.servers = functions.https.onRequest((req, res) => {
   const original = req.query.text;
   res.json('[{"nome":"WWW","url":"bigbank.com.br","agent":"\/monitor.php","protocol":"https"}, {"nome":"SeeU","url":"seeu.me","agent":"\/monitor.php","protocol":"https"}, {"nome":"iSeeU","url":"i.seeu.me","agent":"\/monitor.php","protocol":"http"},{"nome":"devSeeU","url":"dev.seeu.me","agent":"\/monitor.php","protocol":"http"}, {"nome":"ThingsBoard SeeU","url":"thingsboard.seeu.me","agent":"\/monitor.php","protocol":"http"},{"nome":"MQTT","url":"mqtt.seeu.me","agent":"\/monitor.php","protocol":"http"}, {"nome":"eSSe","url":"www.esseregalos.com","agent":"\/monitor.php","protocol":"http"},  {"nome":"Utopias","url":"utopiasargentinas.com","agent":"\/monitor.php","protocol":"http"}]');
 });
 
+
 exports.monitor = functions.https.onRequest((req, res) => {
   const original = req.query.text;
   res.json('[{"name":"SERVERNAME","value":"i.seeu.me"},{"name":"OS Version","value":"CentOS Linux release 7.6.1810 (Core)","mu":""},{"name":"CPUs","value":"2 (Intel(R) Xeon(R) CPU L5520 @ 2.27GHz)","mu":""},{"name":"RAM(Free)","value":"991MB (7%)","mu":""},{"name":"DISK:\/(Free)","value":"8GB (75%)","mu":""},{"name":"SSLEXPIRE","value":"N\/A","mu":""}]');
 });
-/*
+
 exports.addMessage = functions.https.onRequest((req, res) => {
     // Grab the text parameter.
     const original = req.query.text;

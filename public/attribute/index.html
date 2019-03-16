@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Introducing IoT">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>IoT for U</title>
+
+    <!-- Page styles -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.min.css">
+    <link rel="stylesheet" href="../assets/styles.css">
+    <link rel="stylesheet" href="../assets/dialog-polyfill.css">
+  </head>
+<body>
+
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+    <div class="android-be-together-section mdl-typography--text-center">
+      <center>
+          <br>
+          <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+            <thead>
+              <tr>
+                <th class="mdl-data-table__cell--non-numeric">ID</th>
+                <th>Name</th>
+                <th>Unit</th>
+                <th>Status</th>
+                <th>Order</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="menuTable">
+              
+            </tbody>
+          </table>
+          <br>
+          <!--
+            Add/Edit Dialog for Menu Item
+          -->
+          <button type="button" id="addButton" class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored show-modal">
+              <i class="material-icons">add</i>
+          </button>
+          <dialog class="mdl-dialog" style="width: 350px;">
+            <div class="mdl-dialog__title">
+              <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab close">
+                  <i class="material-icons">close</i>
+              </button>
+            </div>
+            <div class="mdl-dialog__content">
+              <form action="#">
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" id="inName" required>
+                  <label class="mdl-textfield__label" for="inName">Name...</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" id="inUnit">
+                  <label class="mdl-textfield__label" for="inType">Unit...</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" id="inStatus">
+                  <label class="mdl-textfield__label" for="inStatus">Status...</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="inOrder">
+                  <label class="mdl-textfield__label" for="inOrder">Order...</label>
+                  <span class="mdl-textfield__error">Input is not a number!</span>
+                </div>
+              </form>  
+            </div>
+            <div class="mdl-dialog__actions mdl-dialog__actions">
+              <button id="add-menu" class="mdl-button mdl-js-button mdl-button--fab mdl-button--accent close">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+          </dialog>
+  
+        </center>
+      </div>
+  </div>
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+<!-- Import and configure the Firebase SDK -->
+<!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+<!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+  <script src="https://seeu.me/__/firebase/5.7.0/firebase-app.js"></script>
+  <script src="https://seeu.me/__/firebase/5.7.0/firebase-auth.js"></script>
+  <script src="https://seeu.me/__/firebase/5.7.0/firebase-database.js"></script>
+  <script src="https://seeu.me/__/firebase/5.7.0/firebase-storage.js"></script>
+  <script src="https://seeu.me/__/firebase/init.js"></script>
+
+  <script src="../assets/dialog-polyfill.js"></script>
+  <script src="attribute.js"></script>
+  </body>
+</html>
+
+<script>
+var dialog = document.querySelector('dialog');
+var showModalButton = document.querySelector('.show-modal');
+if (! dialog.showModal) {
+  dialogPolyfill.registerDialog(dialog);
+}
+showModalButton.addEventListener('click', function() {
+  dialog.showModal();
+});
+dialog.querySelector('.close').addEventListener('click', function() {
+  dialog.close();
+});
+</script>
