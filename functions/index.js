@@ -25,7 +25,7 @@ exports.monitor = functions.https.onRequest((req, res) => {
   ref.on('value', snapshot => {
     if (snapshot.exists()) {
       // If Exist save lastSee
-      ref.child('lastSee').set(formatedToday());
+      ref.child('lastSee').set(getDateTime());
 
       // And loop Attributes and save what was found
       att.on('value', snap => {
@@ -33,7 +33,7 @@ exports.monitor = functions.https.onRequest((req, res) => {
           var attribute = value.val().name;
           var valor = eval("req.body."+attribute);
           if (valor != undefined) {
-            console.log('Att: ' + attribute + "=" + valor);
+            //console.log('Att: ' + attribute + "=" + valor);
             ref.child(attribute).set(valor);
           } 
         });
@@ -43,7 +43,7 @@ exports.monitor = functions.https.onRequest((req, res) => {
       });
     } else {
       // If not exist, error
-      return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["Thing not found for this user"]}}]');
+      return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["Thing \"'+ thingid + '\" not found for user \"'+ currentUID + '\""]}}]');
     }
     ref.off('value');
   }, err => {
@@ -51,8 +51,7 @@ exports.monitor = functions.https.onRequest((req, res) => {
   });
 
   // Is everithing is OK, close the call 
-  return res.json('{"Thing":"'+ thingid + ', "status":"OK"}');
-
+  res.json('{"Thing":"'+ thingid + ', "status":"OK"}');
   /*
   const original = req.query.text;
   const text = req.body.text;
@@ -63,12 +62,24 @@ exports.monitor = functions.https.onRequest((req, res) => {
 
 });
 
-function formatedToday() { 
-  var d = new Date();
-  return  d.getDate()  + "/" + (d.getMonth()+1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + d.getMinutes();
+function getDateTime() {
+	var today = new Date();
+	var day = today.getDate() + "";
+	var month = (today.getMonth() + 1) + "";
+	var year = today.getFullYear() + "";
+	var hour = today.getHours() + "";
+	var minutes = today.getMinutes() + "";
+	var seconds = today.getSeconds() + "";
+
+	day = checkZero(day);
+	month = checkZero(month);
+	year = checkZero(year);
+	hour = checkZero(hour);
+	mintues = checkZero(minutes);
+	seconds = checkZero(seconds);
+
+	return (day + "/" + month + "/" + year + " " + hour + ":" + minutes + ":" + seconds);
 }
-
-
 /*
 exports.servers = functions.https.onRequest((req, res) => {
   const original = req.query.text;

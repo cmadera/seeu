@@ -5,7 +5,7 @@ var addButton = document.getElementById('addButton');
 var addMenuButton = document.getElementById('add-menu');
 
 var inName    = document.getElementById('inName');
-var inType  = document.getElementById('inUnit');
+var inUnit  = document.getElementById('inUnit');
 var inStatus  = document.getElementById('inStatus');
 var inOrder  = document.getElementById('inOrder');
 
@@ -38,7 +38,7 @@ window.addEventListener('load', function() {
   addMenuButton.addEventListener('click', function() {
     var varItem = {
       name: inName.value,
-      utit: inUnit.value,
+      unit: inUnit.value,
       status: inStatus.value,
       order: inOrder.value,
       dateModified : formatedToday(),
@@ -78,7 +78,6 @@ function addMenuOnScreen(data, key) {
   var tr = document.createElement("tr");
   tr.setAttribute('id', key);
 
-  tr.appendChild(createTD(key));
   tr.appendChild(createTD(data.name));
   tr.appendChild(createTD(data.unit));
   tr.appendChild(createTD(data.status));

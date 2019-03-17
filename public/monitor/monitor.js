@@ -58,10 +58,11 @@ function addCardOnScreen(data, key) {
     att.on('value', snap => {
         snap.forEach(value => {
             var attribute = value.val().name;
+            var unit = value.val().unit;
             var valor = eval("data."+attribute);
             if (valor != undefined) {
                 console.log('Att: ' + attribute + "=" + valor);
-                table.appendChild(createTR(attribute,valor));
+                table.appendChild(createTR(attribute,valor + (unit==null?"":" "+ unit)));
             }
         });
         ref.off('value');
