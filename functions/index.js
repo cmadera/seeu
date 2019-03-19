@@ -62,6 +62,38 @@ exports.monitor = functions.https.onRequest((req, res) => {
 
 });
 
+exports.ping = functions.https.onRequest((req, res) => {
+  const currentUID = req.query.currentUID;
+
+  if (currentUID==null)
+    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["currentUID is missing"]}}]');
+
+  // Get Thing database
+  var ref = admin.database().ref('thing/'+currentUID);
+  var ping = require('ping');
+
+  console.log("Starting ping...");
+
+  // Check if User+Thing exist
+  ref.on('value', snapshot => {
+    res.json('{"OKs":"'+ snapshot.numChildren() + ', "status":"OK"}');
+    snapshot.forEach(value => {
+      var host = value.val().address;
+      ping.sys.probe(host, function(isAlive){
+        var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
+        //if (isAlive)
+        //  ref.child('pingalive').set(getDateTime());
+        console.log(msg);
+    });
+  });
+    ref.off('value');
+  }, err => {
+    console.log('erro no on', err);
+  });
+
+
+});
+
 function getDateTime() {
 	var today = new Date();
 	var day = today.getDate() + "";
