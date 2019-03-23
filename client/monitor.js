@@ -1,19 +1,18 @@
 const os = require('os-utils');
 const https = require('https');
 const schedule = require('node-schedule');
-
+var sensor = require('node-dht-sensor');
 
 const userID="YWjFFLuN4aYMf7lwXa4ASHWFkLn2";
-const thingid="-La7dhH9xRkhD-HvEx1L";
+const thingid="-La7YqpPCGUJtHHTmb4T";
 const hostname = "us-central1-seeume-15d54.cloudfunctions.net";
  
 schedule.scheduleJob('* * * * *', function(){
-	console.log('\nSending data...'+getDateTime());
-	sendData();
+	console.log('\nGetting data...'+getDateTime());
+	getTelemetry();
 });
 
-function sendData() {
-	const data = getData();
+function sendData(data) {
 
 	const options = {
 	  hostname: hostname,
@@ -42,11 +41,34 @@ function sendData() {
 	req.end()
 }
 
+function getTelemetry() {
+	var data = {  temperature: 0,  humidity: 0 };
+	sensor.read(11, 4, function(err, temperature, humidity) {
+	    if (!err) {
+			data.temperature = temperature.toFixed(1);
+			data.humidity = humidity.toFixed(1) ;
+	        console.log('temp: ' + temperature.toFixed(1) + 'ºC, humidity: ' + humidity.toFixed(1) + '%');
+			getAdd(data);
+	    }
+	});
+}
+function getAdd(data) {
+	sendData('{"OSVersion":"'+os.platform()+'", '+
+		'"CPU":"'+os.cpuCount()+'", '+
+		'"RAM":"'+Math.round(os.totalmem())+'", '+
+		'"Temperature":"'+data.temperature+'", '+
+		'"Humidity":"'+data.humidity+'", '+
+		'"UPTIME":"'+secondsToDhms(os.sysUptime())+'"}');
+}
+
 function getData() {
- return '{"OSVersion":"'+os.platform()+'", '+
-	'"CPU":"'+os.cpuCount()+'", '+
-	'"RAM":"'+Math.round(os.totalmem())+'", '+
-	'"UPTIME":"'+secondsToDhms(os.sysUptime())+'"}';
+	var tele = getTelemetry();
+	return '{"OSVersion":"'+os.platform()+'", '+
+		'"CPU":"'+os.cpuCount()+'", '+
+		'"RAM":"'+Math.round(os.totalmem())+'", '+
+		'"Temperature":"'+tele.temperature+'", '+
+		'"Humidity":"'+tele.humidity+'", '+
+		'"UPTIME":"'+secondsToDhms(os.sysUptime())+'"}';
 }
 
 function getTime() {

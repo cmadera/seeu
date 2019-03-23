@@ -112,6 +112,11 @@ function getDateTime() {
 
 	return (day + "/" + month + "/" + year + " " + hour + ":" + minutes + ":" + seconds);
 }
+
+function checkZero(data){
+	if(data.length == 1){ data = "0" + data;  }
+	return data;
+}
 /*
 exports.servers = functions.https.onRequest((req, res) => {
   const original = req.query.text;
