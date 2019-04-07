@@ -127,7 +127,15 @@ exports.IoTDevices= functions.https.onRequest((req, res) => {
   //res.status(200).send([{"deviceName":"Lamp","deviceImg":"https://smartapi.vesync.com/v1/app/imgs/wifi/outlet/smart_wifi_outlet.png","cid":"35243d08-56b2-48da-a413-23b419d83ec6","deviceStatus":"on","connectionType":"wifi","connectionStatus":"online","deviceType":"wifi-switch-1.3","model":"wifi-switch","currentFirmVersion":"2.115"},{"deviceName":"Real TV","deviceImg":"https://smartapi.vesync.com/v1/app/imgs/wifi/outlet/smart_wifi_outlet.png","cid":"4151e41b-b96e-41b0-8187-af19f944119f","deviceStatus":"on","connectionType":"wifi","connectionStatus":"online","deviceType":"wifi-switch-1.3","model":"wifi-switch","currentFirmVersion":"2.115"},{"deviceName":"Desk","deviceImg":"https://smartapi.vesync.com/v1/app/imgs/wifi/outlet/smart_wifi_outlet.png","cid":"4e07edfb-d1ee-471d-8614-1dc4a7118d63","deviceStatus":"off","connectionType":"wifi","connectionStatus":"online","deviceType":"wifi-switch-1.3","model":"wifi-switch","currentFirmVersion":"2.115"}]);
 });
 
-exports.IoTDevicesON= functions.https.onRequest((req, res) => {
+exports.IoTDeviceON= functions.https.onRequest((req, res) => {
+  return turn(releareq, res, "on");
+});
+
+exports.IoTDeviceOFF= functions.https.onRequest((req, res) => {
+  return turn(releareq, res, "off");
+});
+
+function turn(req, res, onoff) {
   var config = {};
   const currentUID = req.query.currentUID;
   const deviceId = req.query.deviceId;
@@ -144,30 +152,9 @@ exports.IoTDevicesON= functions.https.onRequest((req, res) => {
       console.log(value.val().name+"="+ value.val().value);
       config[value.val().name] = value.val().value;
     });
-    vesync.turn(res, config, deviceId, "on");
+    vesync.turn(res, config, deviceId, onoff);
   });
-});
-
-exports.IoTDevicesOFF= functions.https.onRequest((req, res) => {
-  var config = {};
-  const currentUID = req.query.currentUID;
-  const deviceId = req.query.deviceId;
-
-  if (currentUID==null)
-    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["currentUID is missing"]}}]');
-
-  if (deviceId==null)
-    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["deviceId is missing"]}}]');
-
-  var ref = admin.database().ref('config/'+currentUID);
-  return ref.once("value").then (snapshot => {
-    snapshot.forEach(value => {
-      console.log(value.val().name+"="+ value.val().value);
-      config[value.val().name] = value.val().value;
-    });
-    vesync.turn(res, config, deviceId, "off");
-  });
-});
+}
 
 function getDateTime() {
 	var today = new Date();

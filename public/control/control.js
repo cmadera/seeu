@@ -68,9 +68,9 @@ function addCardOnScreen(data) {
     var a = document.createElement("a");
     //a.setAttribute('class', 'signature');
     if (data.deviceStatus=="on") {
-        a.setAttribute('href', '/IoTDevicesOFF?currentUID='+currentUID+'&deviceId='+data.cid);
+        a.setAttribute('href', '/IoTDeviceOFF?currentUID='+currentUID+'&deviceId='+data.cid);
     } else {
-        a.setAttribute('href', '/IoTDevicesON?currentUID='+currentUID+'&deviceId='+data.cid);
+        a.setAttribute('href', '/IoTDeviceON?currentUID='+currentUID+'&deviceId='+data.cid);
     }
     var newText = document.createTextNode(data.deviceStatus=="on"?"Turn off":"Turn on");
     a.appendChild(newText);

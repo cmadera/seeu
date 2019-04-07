@@ -8,8 +8,8 @@
     ],
     "rewrites": [ 
       {"source": "/IoTDevices", "function": "IoTDevices"},
-      {"source": "/IoTDevicesON", "function": "IoTDevicesON"},
-      {"source": "/IoTDevicesOFF", "function": "IoTDevicesOFF"}
+      {"source": "/IoTDeviceON", "function": "IoTDeviceON"},
+      {"source": "/IoTDeviceOFF", "function": "IoTDeviceOFF"}
      ]    
   }
 }
