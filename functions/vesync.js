@@ -7,9 +7,12 @@ const urlTurn = BASE_URL + "/v1/wifi-switch-1.3/";
 
 let config = require('./config.json');
 
-exports.getDevices = function getDevices(res) {
+exports.getDevices = function getDevices(res, pconfig) {
+	config = pconfig;
+	console.log("config:"+JSON.stringify(config));
 	// Post login
 	request.post(get_login(), function (e, r, body) {
+		console.log("config:"+JSON.stringify(body));
 		// Post getDevices
 		request({url: urlDevice, data: {}, json: true, headers: get_headers(body)}, function (e, r, body) {
             //console.log(body);
@@ -21,22 +24,17 @@ exports.getDevices = function getDevices(res) {
 	});	
 }
 
-exports.turn_on = function turn_on(deviceId) {
-	turn(deviceId, 'on');
-}
-
-exports.turn_off = function turn_off(deviceId) {
-	turn(deviceId, 'off');
-}
-
-function turn(deviceId, onoff) {
+exports.turn = function turn(res, pconfig, deviceId, onoff) {
 	var url = urlTurn + deviceId + '/status/' + onoff;
+	config = pconfig;
+	console.log("config:"+JSON.stringify(config));
 	console.log(url);
 	// Post login
 	request.post(get_login(), function (e, r, body) {
 		// Post Turn On / Off
 		request.put({url: url, method: "POST", json: true, data: {}, headers: get_headers(body)}, function (e, r, body) {
-			console.log(body);
+            console.log("Turn it " + onoff);
+			return res.status(200).send("Turn it " + onoff);
 		});	
 	});	
 }

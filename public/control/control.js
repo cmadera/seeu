@@ -19,12 +19,12 @@ function onAuthStateChanged(user) {
     if (user && currentUID === user.uid) return;
     currentUID = (user)?user.uid:null;
 
-    getDevices();
+    getDevices(currentUID);
 }
 
-function getDevices() {
+function getDevices(currentUID) {
     var xmlhttp = new XMLHttpRequest();
-    var url = "/IoTDevices";
+    var url = "/IoTDevices?currentUID="+currentUID;
     
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -68,9 +68,9 @@ function addCardOnScreen(data) {
     var a = document.createElement("a");
     //a.setAttribute('class', 'signature');
     if (data.deviceStatus=="on") {
-        a.setAttribute('href', '/IoTDevicesOFF?currentUID='+data.cid);
+        a.setAttribute('href', '/IoTDevicesOFF?currentUID='+currentUID+'&deviceId='+data.cid);
     } else {
-        a.setAttribute('href', '/IoTDevicesON?currentUID='+data.cid);
+        a.setAttribute('href', '/IoTDevicesON?currentUID='+currentUID+'&deviceId='+data.cid);
     }
     var newText = document.createTextNode(data.deviceStatus=="on"?"Turn off":"Turn on");
     a.appendChild(newText);
