@@ -128,11 +128,11 @@ exports.IoTDevices= functions.https.onRequest((req, res) => {
 });
 
 exports.IoTDeviceON= functions.https.onRequest((req, res) => {
-  return turn(releareq, res, "on");
+  return turn(req, res, "on");
 });
 
 exports.IoTDeviceOFF= functions.https.onRequest((req, res) => {
-  return turn(releareq, res, "off");
+  return turn(req, res, "off");
 });
 
 function turn(req, res, onoff) {
