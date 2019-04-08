@@ -22,6 +22,30 @@ function onAuthStateChanged(user) {
     getDevices(currentUID);
 }
 
+function turnDevice(currentUID, deviceId) {
+    var xmlhttp = new XMLHttpRequest();
+    let butDev = document.getElementById(deviceId);
+    let statusDev = document.getElementById("Status:"+deviceId);
+    var url;
+    if (butDev.value=="on") {
+        url='/IoTDeviceOFF?currentUID='+currentUID+'&deviceId='+deviceId;
+    } else {
+        url='/IoTDeviceON?currentUID='+currentUID+'&deviceId='+deviceId;
+    }
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = this.responseText;
+            butDev.value = (butDev.value=="on"?"off":"on");
+            butDev.innerText = (butDev.value=="on"?"Turn off":"Turn on");
+            statusDev.innerText = butDev.value;
+        }
+    };
+    
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+};
+
 function getDevices(currentUID) {
     var xmlhttp = new XMLHttpRequest();
     var url = "/IoTDevices?currentUID="+currentUID;
@@ -56,25 +80,19 @@ function addCardOnScreen(data) {
 
     var table = document.createElement("table");
     table.className = "mdl-data-table mdl-js-data-table mdl-shadow--8dp";
-    //table.setAttribute('border', '1');
-//    table.appendChild(createTR("ThingID",key));
-//    table.appendChild(createTR("Name",data.name));
     table.appendChild(createTR("Device Name",data.deviceName));
-    table.appendChild(createTR("Device Status",data.deviceStatus));
+    table.appendChild(createTR("Device Status",data.deviceStatus, "Status:"+data.cid));
     table.appendChild(createTR("Connection Status",data.connectionStatus));
     var tr = document.createElement("tr");
-    tr.appendChild(createTD(data.deviceStatus=="on"?"Turn off":"Turn on", true));
+    tr.appendChild(createTD("Action:"));
     var td = document.createElement("td");
-    var a = document.createElement("a");
+    var a = document.createElement("button");
     //a.setAttribute('class', 'signature');
-    if (data.deviceStatus=="on") {
-        a.setAttribute('href', '/IoTDeviceOFF?currentUID='+currentUID+'&deviceId='+data.cid);
-    } else {
-        a.setAttribute('href', '/IoTDeviceON?currentUID='+currentUID+'&deviceId='+data.cid);
-    }
+    a.setAttribute('id', data.cid);
+    a.setAttribute('onclick', 'turnDevice("'+currentUID+'", "'+data.cid+'");');
     var newText = document.createTextNode(data.deviceStatus=="on"?"Turn off":"Turn on");
     a.appendChild(newText);
-
+    a.value = data.deviceStatus;
 
     td.appendChild(a);
     tr.appendChild(td);
@@ -94,14 +112,14 @@ function addCardOnScreen(data) {
 
 }
 
-function createTR(name, value) {
+function createTR(name, value, id) {
     var tr = document.createElement("tr");
     tr.appendChild(createTD(name, true));
-    tr.appendChild(createTD(value));
+    tr.appendChild(createTD(value, false, id));
     return tr;
 }
   
-function createTD(txt, bold) {
+function createTD(txt, bold, id) {
     var td = document.createElement("td");
     if (bold) {
         var b = document.createElement("b");
@@ -109,6 +127,9 @@ function createTD(txt, bold) {
         td.appendChild(b);
     } else 
         td.appendChild(document.createTextNode(txt));
+    if (id!="") {
+        td.setAttribute('id', id);
+    }
     return td;
 }
 

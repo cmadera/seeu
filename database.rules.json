@@ -16,11 +16,23 @@
         ".write": "auth != null"          
       }
     },
+    "attribute": {
+      "$uid": {
+        ".read":  "auth != null && auth.uid == $uid",
+        ".write": "auth != null"          
+      }
+    },
     "users": {
       ".read":  "auth != null",
       ".write": "auth != null"          
     },
-    "logins": {
+    "config": {
+      "$uid": {
+        ".read":  "auth != null && auth.uid == $uid",
+        ".write": "auth != null"          
+      }
+    },
+      "logins": {
       ".read":  "auth != null",
       ".write": "auth != null"          
     }
