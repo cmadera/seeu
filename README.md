@@ -45,22 +45,28 @@ https://git-scm.com/download/gui/
 ## Integrations
 ```
  Users have Things
- Users use Things
+ Users use Devices
  Things are monitored
- Things has Things
- Things request from Things
- Things connect to things
- Places have places
- Places have things
- Users have places
  Things types have properties
  Properties have unit measures
  Properties have valid values
 ``` 
 ## CRUDs
+``` 
 Things
+Types
+Attribute
+Config
+``` 
 
-Places
 ## Admin
 ### Reports
 Users
+
+## TODO
+``` 
+- On/off on the same screen
+- Use connection status to allow on/off
+- Update Device Status after on/off
+- Realtime monitoring based on things CRUD
+``` 
