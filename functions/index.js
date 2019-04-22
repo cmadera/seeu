@@ -8,6 +8,16 @@ const cors = require('cors')({ origin: true });
 
 admin.initializeApp();
 
+/*
+exports.token = functions.https.onRequest((req, res) => {
+  if (currentUID==null)
+    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["currentUID is missing"]}}]');
+  // Get Attributes Database
+  var att = admin.database().ref('config/'+currentUID);
+
+});
+*/
+
 exports.monitor = functions.https.onRequest((req, res) => {
   const thingid = req.query.thingid;
   const currentUID = req.query.currentUID;
@@ -184,7 +194,6 @@ exports.servers = functions.https.onRequest((req, res) => {
   const original = req.query.text;
   res.json('[{"nome":"WWW","url":"bigbank.com.br","agent":"\/monitor.php","protocol":"https"}, {"nome":"SeeU","url":"seeu.me","agent":"\/monitor.php","protocol":"https"}, {"nome":"iSeeU","url":"i.seeu.me","agent":"\/monitor.php","protocol":"http"},{"nome":"devSeeU","url":"dev.seeu.me","agent":"\/monitor.php","protocol":"http"}, {"nome":"ThingsBoard SeeU","url":"thingsboard.seeu.me","agent":"\/monitor.php","protocol":"http"},{"nome":"MQTT","url":"mqtt.seeu.me","agent":"\/monitor.php","protocol":"http"}, {"nome":"eSSe","url":"www.esseregalos.com","agent":"\/monitor.php","protocol":"http"},  {"nome":"Utopias","url":"utopiasargentinas.com","agent":"\/monitor.php","protocol":"http"}]');
 });
-
 
 exports.monitor = functions.https.onRequest((req, res) => {
   const original = req.query.text;

@@ -10,6 +10,10 @@
         ".write": "auth != null"          
       }
     },
+    "todo": {
+      ".read":  true,
+      ".write":"auth != null && auth.token.email == 'carlos.madera@gmail.com'"  
+    },
     "types": {
       "$uid": {
         ".read":  "auth != null && auth.uid == $uid",
@@ -38,3 +42,4 @@
     }
   }
 }
+

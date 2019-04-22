@@ -4,9 +4,7 @@
 var addButton = document.getElementById('addButton');
 var addMenuButton = document.getElementById('add-menu');
 
-var inName    = document.getElementById('inName');
-var inAddress   = document.getElementById('inAddress');
-var inType  = document.getElementById('inType');
+var inTodo    = document.getElementById('inTodo');
 var inStatus  = document.getElementById('inStatus');
 var inOrder  = document.getElementById('inOrder');
 
@@ -20,7 +18,7 @@ function onAuthStateChanged(user) {
   currentUID = (user)?user.uid:null;
 
   if (currentUID!=null) {
-    ref = firebase.database().ref('thing/'+currentUID);
+    ref = firebase.database().ref('todo');
   } else {
     ref = null;
     addButton.style.display = 'none';
@@ -38,9 +36,7 @@ window.addEventListener('load', function() {
 
   addMenuButton.addEventListener('click', function() {
     var varItem = {
-      name: inName.value,
-      address: inAddress.value,
-      type: inType.value,
+      todo: inTodo.value,
       status: inStatus.value,
       order: inOrder.value,
       dateModified : formatedToday(),
@@ -80,10 +76,7 @@ function addMenuOnScreen(data, key) {
   var tr = document.createElement("tr");
   tr.setAttribute('id', key);
 
-  tr.appendChild(createTD(key, "mdl-data-table__cell--non-numeric"));
-  tr.appendChild(createTD(data.name, "mdl-data-table__cell--non-numeric"));
-  tr.appendChild(createTD(data.address, "mdl-data-table__cell--non-numeric"));
-  tr.appendChild(createTD(data.type));
+  tr.appendChild(createTD(data.todo, "mdl-data-table__cell--non-numeric"));
   tr.appendChild(createTD(data.status));
   tr.appendChild(createTD(data.order));
   var td = document.createElement("td");
