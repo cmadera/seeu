@@ -93,6 +93,8 @@ function addCardOnScreen(data) {
     var newText = document.createTextNode(data.deviceStatus=="on"?"Turn off":"Turn on");
     a.appendChild(newText);
     a.value = data.deviceStatus;
+    if(data.connectionStatus=='offline') 
+        a.setAttribute('disabled','');
 
     td.appendChild(a);
     tr.appendChild(td);
