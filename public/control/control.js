@@ -38,6 +38,7 @@ function turnDevice(currentUID, deviceId) {
             var response = this.responseText;
             butDev.value = (butDev.value=="on"?"off":"on");
             butDev.innerText = (butDev.value=="on"?"Turn off":"Turn on");
+            butDev.className = "mdl-button mdl-js-button mdl-button--raised mdl-button--" + (butDev.value=="on"?"colored":"accent");
             statusDev.innerText = butDev.value;
         }
     };
@@ -73,7 +74,7 @@ if (currentUID!=null && !populated) {
 }
 
 function addCardOnScreen(data) {
-    let divCell = createDIV("mdl-cell mdl-cell--3-col mdl-shadow--2dp");
+    let divCell = createDIV("mdl-cell mdl-cell--4-col mdl-shadow--2dp");
     let divLayout = createDIV("android-content mdl-layout__content");
     let divShadow =  createDIV("mdl-card mdl-shadow--8dp");
     let divTitle  =  createDIV("mdl-card__title");
@@ -90,6 +91,7 @@ function addCardOnScreen(data) {
     //a.setAttribute('class', 'signature');
     a.setAttribute('id', data.cid);
     a.setAttribute('onclick', 'turnDevice("'+currentUID+'", "'+data.cid+'");');
+    a.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised mdl-button--"+ (data.deviceStatus=="on"?"colored":"accent"));
     var newText = document.createTextNode(data.deviceStatus=="on"?"Turn off":"Turn on");
     a.appendChild(newText);
     a.value = data.deviceStatus;

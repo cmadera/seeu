@@ -4,7 +4,8 @@ const functions = require('firebase-functions');
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require('firebase-admin');
 let vesync = require('./vesync.js');
-const cors = require('cors')({ origin: true });
+
+var config = {};
 
 admin.initializeApp();
 
@@ -17,6 +18,31 @@ exports.token = functions.https.onRequest((req, res) => {
 
 });
 */
+
+
+exports.catc = functions.https.onRequest((req, res) => {
+  const currentUID = req.query.currentUID;
+
+  if (currentUID==null)
+    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["currentUID is missing"]}}]');
+
+  var CatC = require('node-catc');
+
+  var api = new CatC('enegy5aXuDA4aHehu2u3AvY9u', 'carlos.madera@gmail.com');
+  
+  api.listServers(function(err, res) {
+    if(!err) {
+      for(var i in res.data) {
+        console.log(res.data[i]);
+      }
+      return res.status(200).json(res.data);
+    } else {
+      return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["'+err+'"]}}]');
+    }
+  });
+  
+});
+
 
 exports.monitor = functions.https.onRequest((req, res) => {
   const thingid = req.query.thingid;
