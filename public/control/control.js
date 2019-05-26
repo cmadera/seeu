@@ -8,6 +8,11 @@ var att;
 var currentUID;
 var populated = false;
 
+Redirect();
+function Redirect() {
+    setTimeout("location.reload(true);",600 * 1000);   
+}
+
 // Bindings on load.
 window.addEventListener('load', function() {
 
@@ -91,12 +96,15 @@ function addCardOnScreen(data) {
     //a.setAttribute('class', 'signature');
     a.setAttribute('id', data.cid);
     a.setAttribute('onclick', 'turnDevice("'+currentUID+'", "'+data.cid+'");');
-    a.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised mdl-button--"+ (data.deviceStatus=="on"?"colored":"accent"));
     var newText = document.createTextNode(data.deviceStatus=="on"?"Turn off":"Turn on");
     a.appendChild(newText);
     a.value = data.deviceStatus;
-    if(data.connectionStatus=='offline') 
+    if(data.connectionStatus=='offline') {
         a.setAttribute('disabled','');
+        a.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised");
+    } else {
+        a.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised mdl-button--"+ (data.deviceStatus=="on"?"colored":"accent"));
+    }
 
     td.appendChild(a);
     tr.appendChild(td);
