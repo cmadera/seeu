@@ -116,12 +116,21 @@ exports.thing = functions.https.onRequest((req, res) => {
 exports.ping = functions.https.onRequest((req, res) => {
   const currentUID = req.query.currentUID;
 
+  var ping = require('ping');
+  var hosts = ['i.seeu.me', 'bigbank.com.br', 'raspberrypi3'];
+  hosts.forEach(function(host){
+      ping.sys.probe(host, function(isAlive){
+          var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
+          console.log(msg);
+      });
+  });
+  const httpping = require('node-http-ping');
+
   if (currentUID==null)
     return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["currentUID is missing"]}}]');
 
   // Get Thing database
   var ref = admin.database().ref('thing/'+currentUID);
-  var ping = require('ping');
 
   console.log("Starting ping...");
 
@@ -130,13 +139,30 @@ exports.ping = functions.https.onRequest((req, res) => {
     res.json('{"OKs":"'+ snapshot.numChildren() + ', "status":"OK"}');
     snapshot.forEach(value => {
       var host = value.val().address;
-      ping.sys.probe(host, function(isAlive){
-        var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
-        //if (isAlive)
-        //  ref.child('pingalive').set(getDateTime());
-        console.log(msg);
+      var lastSee = value.val().lastSee;
+      var thingid = value.val().thingid;
+      
+      httpping(host, 80 /* optional */)
+        .then(function(time) {
+          console.log(`Response ${host} time: ${time}ms`);
+          console.log('Go host go:' + host + ' -lastSee- ' + lastSee);
+          //var toset = admin.database().ref('thing/'+currentUID+'/'+thingid);
+          console.log('Go thingid go:' + thingid + ' -lastSee- ' + lastSee);
+          //toset.child('lastSee').set(getDateTime());
+        })
+        .catch(() => console.log(`Failed to ping ${host} 80`));
+      ping.sys.probe(host, function(isAlive) {
+        //var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
+        var msg = 'host ' + host + ' is ';
+        if (isAlive) {
+          snapshot.child('lastSee').set(getDateTime());
+          msg += 'alive';
+        } else {
+          msg += 'dead';
+        }
+        //console.log(msg);
+      });
     });
-  });
     ref.off('value');
   }, err => {
     console.log('erro no on', err);
