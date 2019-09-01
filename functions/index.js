@@ -101,6 +101,30 @@ exports.monitor = functions.https.onRequest((req, res) => {
 });
 
 
+exports.adega = functions.https.onRequest((req, res) => {
+  const thingid = req.query.thingid;
+  const currentUID = req.query.currentUID;
+  const temperature = req.query.temperature;
+  const humidity = req.query.humidity;
+  if (thingid==null)
+    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["ThingID is missing"]}}]');
+
+  if (currentUID==null)
+    return res.status(400).json('[{"error":{"code":400,"status":"BAD_REQUEST","message":,"errors":["currentUID is missing"]}}]');
+
+  // Get Thing database
+  var ref = admin.database().ref('adega/'+currentUID);
+  var varItem = {
+    temperature: temperature,
+    humidity: humidity,
+    dateModified : getDateTime(),
+  };
+  ref.push(varItem).then(() => {
+    res.json('{"temperature":"'+ temperature + ', "status":"OK"}');
+  });
+
+});
+
 exports.thing = functions.https.onRequest((req, res) => {
   const currentUID = req.query.currentUID;
 
