@@ -3,15 +3,38 @@
 # Install
 
 ## Environment
+## Ubuntu Alias ##
+vi .bashrc
+```
+alias get='sudo apt-get install -y'
+alias df='df -h'
+alias ls='ls -la'
+alias upgrade='sudo apt-get update -y && sudo apt-get upgrade -y'
+alias cdwww='cd /var/www/html'
+alias myip='curl ifconfig.me'
+```
+get curl
 
-### Visual Studio Code
-https://code.visualstudio.com/
+## CentOS Alias ##
+vi .bashrc
+```
+alias get='sudo yum install -y'
+alias df='df -h'
+alias ls='ls -la'
+alias upgrade='sudo yum update -y'
+alias cdwww='cd /var/www/html'
+alias myip='curl ifconfig.me'
+```
+get curl
 
-### Node Js
-https://nodejs.org/en/download/
-
-### Git
-https://git-scm.com/download/gui/
+### Get Dev
+```
+  get nodejs
+  get git
+  get npm
+  get code
+```
+### Get SeeU
 ```
   cd ~
   mkdir dev
@@ -22,11 +45,12 @@ https://git-scm.com/download/gui/
   git commit -a
   git push origin master
 ```
-
 ### Firebase
 ```
   // Firebase local install 
-  npm install -g firebase-tools
+  sudo npm install -g firebase-tools
+  sudo npm install -g firebase-functions
+  sudo npm install -g firebase-admin
 
   // Deploy
   firebase deploy --only hosting
@@ -34,23 +58,6 @@ https://git-scm.com/download/gui/
   // Server emulator
   firebase serve --only hosting
 ```
-# seeu
-
-## Referentials
-### Things
-### Users
-### Places
-### Things types
-
-## Integrations
-```
- Users have Things
- Users use Devices
- Things are monitored
- Things types have properties
- Properties have unit measures
- Properties have valid values
-``` 
 ## CRUDs
 ``` 
 Things
@@ -65,8 +72,5 @@ Users
 
 ## TODO
 ``` 
-- On/off on the same screen
-- Use connection status to allow on/off
-- Update Device Status after on/off
 - Realtime monitoring based on things CRUD
 ``` 
