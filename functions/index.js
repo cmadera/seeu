@@ -4,6 +4,7 @@ const functions = require('firebase-functions');
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require('firebase-admin');
 let vesync = require('./vesync.js');
+let getmonitor = require('./monitor.js');
 
 var config = {};
 
@@ -18,6 +19,12 @@ exports.token = functions.https.onRequest((req, res) => {
 
 });
 */
+
+exports.infra = functions.https.onRequest((req, res) => {
+  var vMonitor = getmonitor.result();
+  return res.status(200).json('[{"infra":{"code":200,"status":"OK","message":"'+vMonitor+'"}}]');
+});
+
 
 
 exports.catc = functions.https.onRequest((req, res) => {
