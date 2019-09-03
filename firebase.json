@@ -5,6 +5,23 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "rewrites": [ {
+      "source": "/IoTDevices",
+      "function": "IoTDevices"
+    }, {
+      "source": "/IoTDeviceON",
+      "function": "IoTDeviceON"
+    }, {
+      "source": "/IoTDeviceOFF",
+      "function": "IoTDeviceOFF"
+    }, {
+      "source": "/thing",
+      "function": "thing"
+    }, {
+      "source": "/adega",
+      "function": "adega"
+    }
+ ]
   }
 }

@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "firebase-admin": "~7.0.0",
-    "firebase-functions": "^2.2.0",
+    "firebase-admin": "^8.4.0",
+    "firebase-functions": "^3.2.0",
     "node-catc": "^1.0.7",
     "ping": "^0.2.2",
     "request": "^2.88.0"
-  },"engines": {
+  },
+  "engines": {
     "node": "8"
   },
   "private": true
